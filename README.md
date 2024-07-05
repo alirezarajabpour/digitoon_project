@@ -91,5 +91,5 @@ Visualization (2 Approach)
 *   You can see the results in the (`matplotlib_results`) directory.
 
 ####
-![image](matplotlib_results/Top_15_Accessed_URLs.png)
+![image](matplotlib_results/Precentage_Of_Each_Accessed_URLs.png)
 ####
