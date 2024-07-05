@@ -2,7 +2,7 @@
 Docker Compose Setup
 --------------------
 
-Starting with `Docker Compose` file, I’ve included services for MySQL, Grafana, and Spark.
+Starting with `Docker-Compose` file, I’ve included services for MySQL, Grafana, and Spark.
 
 MySQL Database and Table
 -----------------------
@@ -28,9 +28,9 @@ FLUSH PRIVILEGES;`
 Data Parsing, Cleaning, and Insertion (2 Approach)
 -------------------------------------
 
-### Python Approach (`parse\insert.py`)
+### Python Approach (`parse_insert.py`)
 
-Python script `parse\insert.py` handles data parsing, cleaning, and insertion. Here are some key points:
+Python script `parse_insert.py` handles data parsing, cleaning, and insertion. Here are some key points:
 
 *   The `parse_log_line` function extracts fields from the log data using regular expressions.
     *   It’s handling the `QueryParams` as JSON.
@@ -39,14 +39,14 @@ Python script `parse\insert.py` handles data parsing, cleaning, and insertion.
 
 *   I didn’t drop the null rows because `IP_Addresses` and `Response_Size` are not the main focus. If I were to drop the row, it would affect the visualization, so I just store them as `NULL`.
     
-*   Dropping duplicate rows (`df\_cleaned = df.drop\_duplicates()`).
+*   Dropping duplicate rows (`df_cleaned = df.drop_duplicates()`).
 
 *   insert them into the `xlogs` table using `sqlalchemy`.
     
 
 ### Spark Approach
 
-`spark\app` directory contains the code :
+`spark_app` directory contains the code :
 
 *   Initialization and configuration.
     
