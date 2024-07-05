@@ -1,0 +1,85 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: digitoon123
+      MYSQL_DATABASE: logs
+      MYSQL_USER: digitoon
+      MYSQL_PASSWORD: digitoon123
+    volumes:
+      - ./mysql/logs:/var/lib/mysql 
+    ports:
+      - "3306:3306"
+    networks:
+      - log_pro
+    restart: on-failure:10
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: digitoon
+      GF_SECURITY_ADMIN_PASSWORD: digitoon123
+      GF_LOG_MODE: "console file"
+    volumes:
+      - ./grafana_storage:/var/lib/grafana
+    networks:
+      - log_pro
+    restart: on-failure:10
+
+  spark-master:
+    image: bitnami/spark
+    container_name: spark-master
+    hostname: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_USER=spark
+    volumes:
+      - ./spark_data/apps:/opt/bitnami/spark/apps
+      - ./spark_data/data:/opt/bitnami/spark/data
+    ports:
+      - '8080:8080'
+    networks:
+      - log_pro
+    restart: on-failure:10
+
+  spark-worker:
+    image: bitnami/spark
+    container_name: spark-worker
+    hostname: spark-worker
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=512M
+      - SPARK_WORKER_CORES=1
+      - SPARK_DRIVER_MEMORY=512M
+      - SPARK_EXECUTOR_MEMORY=512M
+      - SPARK_LOCAL_IP=spark-worker
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_USER=spark
+      - SPARK_LOCAL_IP=0.0.0.0
+    volumes:
+      - ./spark_data/apps:/opt/bitnami/spark/apps
+      - ./spark_data/data:/opt/bitnami/spark/data
+    ports:
+      - "8081:8081"
+    networks:
+      - log_pro
+    restart: on-failure:10
+
+networks:
+  log_pro:
+    driver: bridge

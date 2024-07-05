@@ -1,0 +1,9 @@
+root - INFO - Data retrieved successfully!
+root - INFO -         IPAddress           Timestamp RequestMethod                                                URL  StatusCode  ResponseSize                                   QueryParams
+0   62.82.168.113 2024-06-22 02:42:22           GET                             /signup?product_id=869         500        4228.0                         {"product_id": "869"}
+1   93.228.77.196 2024-06-24 20:53:22        DELETE  /index.html?category=home&category=fashion&pro...         404        2120.0  {"category": "fashion", "product_id": "610"}
+2  160.229.223.17 2024-06-25 03:26:22        DELETE                                 /login?user_id=945         500         734.0                            {"user_id": "945"}
+3   13.224.24.185 2024-06-25 10:35:22        DELETE                      /index.html?session_id=ghi789         301        3254.0                      {"session_id": "ghi789"}
+4   90.154.68.175 2024-06-21 20:32:22          POST                          /index.html?category=home         200        1988.0                          {"category": "home"}
+matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
